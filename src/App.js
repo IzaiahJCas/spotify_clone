@@ -1,24 +1,26 @@
-import logo from './logo.svg';
-import './App.css';
+import { Col, Container, Row } from "react-bootstrap";
+import "bootstrap/dist/css/bootstrap.min.css";
+import { useState, useEffect } from "react";
+import SearchBar from "./SearchBar";
+import History from "./History";
+import PlayButton from "./PlayButton";
+import "./App.css";
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Container fluid className="d-flex flex-column" style={{ height: "100vh" }}>
+      <Row className="flex-grow-1">
+        <Col className="border border-dark d-flex flex-column" xs={2} md={2}>
+          <History />
+        </Col>
+        <Col className="border border-dark d-flex flex-column" xs={10} md={10}>
+          <SearchBar />
+        </Col>
+      </Row>
+      <Row className="border border-dark">
+        <PlayButton />
+      </Row>
+    </Container>
   );
 }
 
