@@ -36,19 +36,17 @@ def YoutubeAudioDownload():
     artist = args.Artist
     song = args.Song
     
-    user_input = f"Can you give me the titles of {amount} songs that sound like {artist}'s {song}, don't explain anything just give me the titles please."
+    user_input = f"Can you give me the titles of {amount} more songs that sound like {artist}'s {song}, don't explain anything just give me the titles please, Including the song I gave you."
     response = ChatTest.talk_to_bot(user_input)
     titles = ChatTest.extract_titles(response)
-    
-    print(user_input)
     print(titles)
     
     for i, song in enumerate(titles): 
+        print(song)
         s = Search(song)
         for v in s.results:
             urls.append(v.watch_url)
             break
-        print(urls)
         videoUrl = urls[i]
         video = YouTube(videoUrl)
         audio_stream = video.streams.filter(only_audio=True, file_extension="mp4", adaptive=True).first()
