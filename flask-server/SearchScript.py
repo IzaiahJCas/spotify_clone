@@ -1,13 +1,14 @@
 from flask import Flask, render_template, request, redirect, url_for, jsonify
 from pytube import YouTube
 from pytube import Search
-from pytube import Playlist
 from flask_cors import CORS
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy.orm import DeclarativeBase
+from sqlalchemy.orm import Mapped, mapped_column
 from datetime import datetime
 import argparse
 import ChatTest
+import psycopg2
 import time
 
 
@@ -15,7 +16,23 @@ import time
 app = Flask(__name__)
 CORS(app)
 
-##OpenAI model
+##SQLAlchemy
+class Base(DeclarativeBase):
+  pass
+
+
+app.config["SQLALCHEMY_DATABASE_URI"] = "postgresql://default:************@ep-green-shadow-a4h7g7o9.us-east-1.aws.neon.tech:5432/verceldb?sslmode=require"
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+db = SQLAlchemy()
+db.init_app(app)
+
+class SongBook(db.Model):
+    __tablename__ = 'song_book'
+    id: Mapped[int] = mapped_column(primary_key=True)
+    song_name: Mapped[str] = mapped_column(unique=True)
+    
+with app.app_context():
+    db.create_all()
 
 ##Youtube app Search Script
 AUDIO_DOWNLOAD_DIR = r"C:\Users\donut\Music"
@@ -59,7 +76,8 @@ def YoutubeAudioDownload():
         
 
 if __name__ == "__main__":
-        YoutubeAudioDownload()
+        
+        app.run(debug=True)
    
         
       
