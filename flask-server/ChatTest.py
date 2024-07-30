@@ -6,8 +6,12 @@ import argparse
 from IPython.display import display
 from IPython.display import Markdown
 import re
+from dotenv import load_dotenv
 
-genai.configure(api_key="AIzaSyB36REv6f_sRnCxM3Alj-HIqKdyno5LdFc")
+
+load_dotenv()
+GEMINI_KEY = os.getenv('GOOGLE_API_KEY')
+genai.configure(api_key=GEMINI_KEY)
 
 model = genai.GenerativeModel('gemini-1.5-pro')
 
