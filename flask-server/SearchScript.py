@@ -72,7 +72,6 @@ def YoutubeAudioDownload(amount, artist, name):
     
     downloaded_files = []
     song_names = []
-    
     for song in titles:
         ydl_opts = {
             'format': 'bestaudio/best',
