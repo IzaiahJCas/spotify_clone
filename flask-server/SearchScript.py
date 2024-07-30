@@ -25,8 +25,9 @@ load_dotenv()
 class Base(DeclarativeBase):
   pass
 
+POSTGRES_URL = os.getenv('POSTGRES_URL')
 
-app.config["SQLALCHEMY_DATABASE_URI"] = "postgresql://default:ygqNv2ALmr5P@ep-green-shadow-a4h7g7o9-pooler.us-east-1.aws.neon.tech/verceldb?sslmode=require"
+app.config["SQLALCHEMY_DATABASE_URI"] = POSTGRES_URL
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy()
 db.init_app(app)
@@ -67,9 +68,11 @@ def YoutubeAudioDownload(amount, artist, name):
     titles = ChatTest.extract_titles(response)
     print(user_input)
     
+    
     downloaded_files = []
     song_names = []
     
+<<<<<<< HEAD
     for i, song in enumerate(titles): 
         s = Search(song)
         for v in s.results:
@@ -78,6 +81,25 @@ def YoutubeAudioDownload(amount, artist, name):
         videoUrl = urls[i]
         video = YouTube(videoUrl)
         audio_stream = video.streams.filter(only_audio=True, file_extension="mp4", adaptive=True).first()
+=======
+    for song in titles:
+        ydl_opts = {
+            'format': 'bestaudio/best',
+            'outtmpl': os.path.join(upload_folder, f"{secure_filename(song)}.%(ext)s"),
+            'quiet': True,
+        }
+
+        try:
+            with yt_dlp.YoutubeDL(ydl_opts) as ydl:
+                info = ydl.extract_info(f"ytsearch:{song}", download=True)
+                downloaded_file = ydl.prepare_filename(info)
+                downloaded_files.append(downloaded_file)
+                song_names.append(song)
+                print(f"Downloaded: {downloaded_file}")
+        except Exception as e:
+            print(f"Failed to download {song}: {e}")
+            continue
+>>>>>>> bb1ae1e (Got yt-dlp working and .env file)
     
         try:
             file_path = os.path.join(upload_folder, f"{secure_filename(song)}.mp4")
