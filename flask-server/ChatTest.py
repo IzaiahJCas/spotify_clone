@@ -73,5 +73,4 @@ if __name__ =="__main__":
     for i, entry in enumerate(conversation_history):
         print(f"Title {i+1}: {entry}")
     
-    print(conversation_history)
     
