@@ -9,7 +9,6 @@ import os
 import ChatTest
 import yt_dlp
 
-
 #Create a Flask Instance
 app = Flask(__name__)
 CORS(app)
@@ -38,9 +37,9 @@ class SongBook(db.Model):
 app.config['UPLOAD_FOLDER'] = r"C:\Users\donut\spotify_clone\flask-server\SongStorage"
 upload_folder = app.config['UPLOAD_FOLDER']
 
-##Youtube app Search Script
-urls = []
-videoUrl = ''
+@app.route('/')
+def index():
+    return 'Hello, World!'
 
 ##Grab form data from front-end
 @app.route('/submit_form', methods=['POST'])
@@ -56,6 +55,9 @@ def submit_form():
 
     return jsonify({'downloaded_files': downloaded_files, 'song_names': song_names})
 
+##Youtube app Search Script
+urls = []
+videoUrl = ''
 def YoutubeAudioDownload(amount, artist, name):
     user_input = f"Can you give me the titles of {amount} more songs that sound like {artist}'s {name}, don't explain anything just give me the titles please, Including the song I gave you."
     response = ChatTest.talk_to_bot(user_input)
