@@ -1,12 +1,21 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { Container, Row, Col } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
+import PlayButton from "../PlayButton";
 
-function SongList() {
+function SongList({
+  currentSong,
+  setCurrentSong,
+  songPlaying,
+  setSongPlaying,
+  songTitle,
+  setSongTitle,
+}) {
   const [audioList, setAudioList] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
-  const [currentSong, setCurrentSong] = useState(null);
+  const [isPlaying, setIsPlaying] = useState(false);
+  const audioRef = useRef(null);
 
   async function fetchAudioList() {
     setLoading(true);
@@ -28,9 +37,34 @@ function SongList() {
     fetchAudioList();
   }, []);
 
-  function handleSongClick(item) {
-    console.log("Selected song:", item);
-    setCurrentSong(`/${item.file_name}`);
+  // const playButton = () => {
+  //   if (audioRef.current) {
+  //     if (isPlaying) {
+  //       audioRef.current.play();
+  //       setIsPlaying(false);
+  //     } else {
+  //       audioRef.current.pause();
+  //       setIsPlaying(true);
+  //     }
+  //   }
+  // };
+
+  function switchSongs(item) {
+    if (currentSong === null && songPlaying === null) {
+      setCurrentSong(`/${item.file_name}`);
+      setSongPlaying(null);
+      setSongTitle(item.song_name);
+    } else if (currentSong !== null && songPlaying === null) {
+      setCurrentSong(null);
+      setSongPlaying(`/${item.file_name}`);
+      setSongTitle(item.song_name);
+    } else if (currentSong === null && songPlaying !== null) {
+      setCurrentSong(`/${item.file_name}`);
+      setSongPlaying(null);
+      setSongTitle(item.song_name);
+    } else {
+      console.log("bad things");
+    }
   }
 
   const handleDelete = async (e) => {
@@ -69,19 +103,13 @@ function SongList() {
             {audioList.map((item, index) => (
               <li
                 key={index}
-                onClick={() => handleSongClick(item)}
+                onClick={() => switchSongs(item)}
                 style={{ cursor: "pointer" }}
               >
                 {item.song_name}
               </li>
             ))}
           </ul>
-          {currentSong && (
-            <audio controls autoPlay>
-              <source src={currentSong} type="audio/mp4" />
-              Your browser does not support the audio element.
-            </audio>
-          )}
         </Col>
       </Row>
     </Container>

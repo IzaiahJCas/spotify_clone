@@ -1,0 +1,34 @@
+.time-bar{
+  display: flex;
+  align-items: center;
+  justify-content: center; 
+}
+
+.form-range{
+    flex-grow: 1;
+}
+
+.play-button{
+   font-size: 50px;
+   border: none;
+   background-color: white;
+   color:black;
+  
+  
+
+}
+
+.play-button:hover{
+    font-size: 52px;
+    border: none;
+    background-color: white;
+    color:rgb(114, 112, 112);
+    transition: font-size 0.2s ease, background-color 0.2s ease, color 0.2s ease
+}
+
+.play-button.active{
+    font-size: 50px;
+    border: none;
+    background-color: white;
+    color:rgb(114, 112, 112);
+}
