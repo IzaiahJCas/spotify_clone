@@ -1,5 +1,5 @@
 import { Col, Container, Row } from "react-bootstrap";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 
 function SearchBar() {
