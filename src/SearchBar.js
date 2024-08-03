@@ -2,7 +2,7 @@ import { Col, Container, Row } from "react-bootstrap";
 import { useState } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 
-function SearchBar() {
+function SearchBar({ songTitle }) {
   const [amount, setAmount] = useState("");
   const [artist, setArtist] = useState("");
   const [name, setName] = useState("");
@@ -76,6 +76,9 @@ function SearchBar() {
           </Col>
         </Row>
       </form>
+      <Row>
+        <h1>Song Playing: {songTitle}</h1>
+      </Row>
     </Container>
   );
 }

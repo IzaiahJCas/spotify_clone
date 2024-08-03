@@ -86,18 +86,9 @@ def get_audio(filename):
    # Join the upload folder with the filename to get the full file path
     file_path = os.path.join(upload_folder, filename)
     file_path_send_file = os.path.join(upload_folder_extended, filename)
-    
-    # Print statements to debug the issue
-    print(f"Requested file path: {file_path}")
-    print(f"Upload folder: {upload_folder}")
-    print(f"Filename: {filename}")
 
     # Check if the file exists and serve it
     if os.path.isfile(file_path):
-        print("File exists!")
-        print(f"Serving file from path: {file_path}")
-        
-        # Send the file
         return send_file(file_path_send_file, as_attachment=False)
     else:
         # If the file does not exist, return a 404 error
