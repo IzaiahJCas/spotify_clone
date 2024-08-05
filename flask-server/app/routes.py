@@ -73,7 +73,6 @@ def get_song_name():
             'file_name': song.file_name
              }
             song_list.append(song_data)
-        print(songs)
         return jsonify(song_list), 200
     except Exception as e:
         return jsonify({'error': str(e)}), 500
@@ -96,11 +95,13 @@ def get_audio(filename):
         return jsonify({'error': 'File not found'}), 404
     
 @main.route('/delete_songs', methods=['POST'])
-def delete_songs():
+def delete_songs(filename):
+    song_to_delete = db.session.query(SongBook).filter(SongBook.file_name == filename).first()
     try:
-        db.session.query(SongBook).delete()
-        db.session.commit()
-        return jsonify({'message': 'All songs deleted'}), 200
+        if song_to_delete:
+            db.session.delete(song_to_delete)
+            db.session.commit()
+            return jsonify({'message': 'All songs deleted'}), 200
     except Exception as e:
         return jsonify({'error': str(e)}), 500
 

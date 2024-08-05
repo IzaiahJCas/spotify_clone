@@ -39,11 +39,13 @@ function PlayButton({
       setVolume(event.target.value);
       audioRef.current.volume = volume;
     }
+    const value = event.target.value * 100; // Convert to percentage
+    event.target.style.setProperty("--value", `${value}%`);
   };
 
   return (
     <div className="container">
-      <div className="row ">
+      <div className="row background-color">
         <div className="col d-flex justify-content-end align-items-center">
           <button onClick={playAndPause} className="play-button">
             <IoPlayCircle />
@@ -58,7 +60,7 @@ function PlayButton({
           )}
         </div>
         <div className="col d-flex justify-content-end align-items-center">
-          <RxSpeakerLoud />
+          <RxSpeakerLoud style={{ color: "white" }} />
           <input
             type="range"
             max={1}
@@ -66,10 +68,11 @@ function PlayButton({
             step={0.02}
             value={volume}
             onChange={volumeBarChange}
+            className="volume-bar"
           />
         </div>
         <div className="row">
-          <div className="col-auto">
+          <div className="col-auto text-color">
             <p>{formatTime(currentTime)}</p>
           </div>
           <div className="col">
@@ -79,10 +82,10 @@ function PlayButton({
               min={0}
               step={0.02}
               value={currentTime}
-              className="form-range"
+              className="song-bar"
             />
           </div>
-          <div className="col-auto">
+          <div className="col-auto text-color">
             <p>{formatTime(songDuration)}</p>
           </div>
         </div>

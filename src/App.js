@@ -29,12 +29,6 @@ function App() {
     }
   };
 
-  // const audioVolume = (event) => {
-  //   if (audioRef.current) {
-  //     audioRef.current.volume = volume;
-  //   }
-  // };
-
   return (
     <Container fluid className="d-flex flex-column" style={{ height: "100vh" }}>
       <Row className="flex-grow-1">

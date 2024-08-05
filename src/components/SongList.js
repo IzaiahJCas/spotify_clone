@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from "react";
 import { Container, Row, Col } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
 import PlayButton from "../PlayButton";
+import "./SongList.css";
 
 function SongList({
   currentSong,
@@ -33,21 +34,25 @@ function SongList({
     }
   }
 
+  async function resetAudioList() {
+    try {
+      const response = await fetch("/song_request");
+      if (!response.ok) {
+        throw new Error("Network response was not ok");
+      }
+      if (!response.ok) {
+        throw new Error("Network response was not ok");
+      }
+      await fetchAudioList();
+    } catch (error) {
+      console.error("There was a problem with the fetch operation:", error);
+    }
+  }
+
   useEffect(() => {
     fetchAudioList();
+    resetAudioList();
   }, []);
-
-  // const playButton = () => {
-  //   if (audioRef.current) {
-  //     if (isPlaying) {
-  //       audioRef.current.play();
-  //       setIsPlaying(false);
-  //     } else {
-  //       audioRef.current.pause();
-  //       setIsPlaying(true);
-  //     }
-  //   }
-  // };
 
   function switchSongs(item) {
     if (currentSong === null && songPlaying === null) {
@@ -92,13 +97,13 @@ function SongList({
   return (
     <Container>
       <h1>Song List</h1>
-      <button onClick={handleDelete} variant="danger">
+      <button onClick={fetchAudioList} variant="danger">
         Reset Songs
       </button>
       {loading && <p>Loading...</p>}
       {error && <p>Error: {error}</p>}
       <Row>
-        <Col>
+        <Col className="d-flex flex-column">
           <ul>
             {audioList.map((item, index) => (
               <li
@@ -107,6 +112,9 @@ function SongList({
                 style={{ cursor: "pointer" }}
               >
                 {item.song_name}
+                <div>
+                  <button onClick={handleDelete}> delete </button>
+                </div>
               </li>
             ))}
           </ul>

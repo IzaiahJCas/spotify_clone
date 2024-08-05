@@ -1,3 +1,7 @@
+.background-color{
+    background-color: black;
+}
+
 .time-bar{
   display: flex;
   align-items: center;
@@ -8,20 +12,21 @@
     flex-grow: 1;
 }
 
+.text-color{
+    color: white;
+}
+
 .play-button{
    font-size: 50px;
    border: none;
-   background-color: white;
-   color:black;
-  
-  
-
+   background-color: black;
+   color:white;
 }
 
 .play-button:hover{
     font-size: 52px;
     border: none;
-    background-color: white;
+    background-color: black;
     color:rgb(114, 112, 112);
     transition: font-size 0.2s ease, background-color 0.2s ease, color 0.2s ease
 }
@@ -32,3 +37,89 @@
     background-color: white;
     color:rgb(114, 112, 112);
 }
+
+/* Styles for the slider*/
+/* Styles for WebKit browsers (Chrome, Safari) */
+
+
+.volume-bar {
+   -webkit-appearance: none;
+   appearance: none;
+
+   width: 15rem;
+   cursor: pointer;
+   outline: none;
+
+   overflow: hidden;
+   border-radius: 25px;
+  }
+  
+  .volume-bar::-webkit-slider-runnable-track {
+    background-color: white;
+    border-radius: 25px; /* Round track edges */
+  }
+
+  .volume-bar::-webkit-slider-thumb {
+    -webkit-appearance: none; /* Remove default thumb styling */
+    appearance: none;
+    width: 13px; /* Thumb width */
+    height: 13px; /* Thumb height */
+    background: #000000; /* Thumb color */
+    background-color: black;
+    cursor: pointer;
+    border-radius: 50%; /* Round thumb */
+    box-shadow: -407px 0 0 400px #2477ca;
+  }
+  
+
+  .volume-bar:focus{
+    outline: none;
+  }
+
+  .volume-bar:focus::-webkit-slider-thumb{
+    border: 1px solid #f8f8f8;
+    outline: 2px solid #2477ca;
+  }
+
+  /* Song time track*/
+
+  .song-bar {
+    -webkit-appearance: none;
+    appearance: none;
+ 
+    width: 100%;
+    cursor: pointer;
+    outline: none;
+ 
+    overflow: hidden;
+    border-radius: 25px;
+   }
+   
+   .song-bar::-webkit-slider-runnable-track {
+     background-color: white;
+     border-radius: 25px; /* Round track edges */
+   }
+ 
+   .song-bar::-webkit-slider-thumb {
+     -webkit-appearance: none; /* Remove default thumb styling */
+     appearance: none;
+     width: 13px; /* Thumb width */
+     height: 13px; /* Thumb height */
+     background: #000000; /* Thumb color */
+     background-color: black;
+     cursor: pointer;
+     border-radius: 50%; /* Round thumb */
+     box-shadow: -807px 0 0 800px #2477ca;
+   }
+   
+ 
+   .song-bar:focus{
+     outline: none;
+   }
+ 
+   .song-bar:focus::-webkit-slider-thumb{
+     border: 1px solid #f8f8f8;
+     outline: 2px solid #2477ca;
+   }
+
+  
