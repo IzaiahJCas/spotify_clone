@@ -59,7 +59,7 @@ function PlayButton({
             </div>
           )}
         </div>
-        <div className="col d-flex justify-content-end align-items-center">
+        <div className="col d-flex justify-content-end align-items-center gap">
           <RxSpeakerLoud style={{ color: "white" }} />
           <input
             type="range"
