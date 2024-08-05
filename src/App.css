@@ -1,4 +1,44 @@
-.border-dark {
-  border-color: #343a40 !important;
+/* .wrapper{
+  height: 100vh;
+  width: 100vw;
+  background-color: black;
+  display: flex;
+  overflow-y: hidden;
 }
 
+.searchbar-background{
+  background-color: rgb(43, 42, 42);
+  border-radius: 25px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  color: white;
+  box-shadow: 2px 4px 10px rgb(233, 30, 99, 0.7);
+}
+
+/* .history-background{
+  background-color: rgb(43, 42, 42);
+  border-radius: 25px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  color: white;
+  box-shadow: 2px 4px 10px rgba(250, 250, 250, 0.3);
+} */
+
+/* .play-button-content{
+  position: relative;
+  z-index: 10;
+} */ 
+
+.custom-scrollbar::-webkit-scrollbar {
+  width: 12px; /* Width of the scrollbar */
+}
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: #f1f1f1; /* Color of the scrollbar track */
+}
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background: #0e0d0d; /* Color of the scrollbar handle */
+  border-radius: 10px; /* Rounded corners of the scrollbar handle */
+}
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: #555; /* Color of the scrollbar handle on hover */
+}

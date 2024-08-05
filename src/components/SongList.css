@@ -1,15 +1,9 @@
-.d-flex {
-    display: flex;
-  }
-  
-  .flex-column {
-    flex-direction: column;
-  }
+.scrollbar-hide::-webkit-scrollbar {
+    display: none;
+}
 
-ul{
-  overflow-y: auto; /* Enable vertical scrolling */
-  border: 1px solid #ccc; /* Optional: add a border for visual effect */
-  padding: 10px; /* Optional: add padding for better spacing */
-  list-style-type: none;
-  flex: 1;
+/* For IE, Edge and Firefox */
+.scrollbar-hide {
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;  /* Firefox */
 }
