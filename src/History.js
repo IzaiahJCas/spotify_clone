@@ -10,7 +10,7 @@ function History({
   setSongTitle,
 }) {
   return (
-    <Container>
+    <Container style={{ display: "flex", flexDirection: "column", flex: "1" }}>
       <SongList
         currentSong={currentSong}
         songPlaying={songPlaying}

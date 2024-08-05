@@ -1,0 +1,15 @@
+.d-flex {
+    display: flex;
+  }
+  
+  .flex-column {
+    flex-direction: column;
+  }
+
+ul{
+  overflow-y: auto; /* Enable vertical scrolling */
+  border: 1px solid #ccc; /* Optional: add a border for visual effect */
+  padding: 10px; /* Optional: add padding for better spacing */
+  list-style-type: none;
+  flex: 1;
+}
