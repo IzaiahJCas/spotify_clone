@@ -18,6 +18,9 @@ function PlayButton({
   audioRef,
   volume,
   setVolume,
+  videoRef,
+  currentVideo,
+  videoPlaying,
 }) {
   const [currentTime, setCurrentTime] = useState(0);
   const [songDuration, setSongDuration] = useState(0);

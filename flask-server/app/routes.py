@@ -9,6 +9,8 @@ from .models import SongBook
 main = Blueprint('main', __name__)
 upload_folder = os.path.join('app', 'SongStorage')
 upload_folder_extended = os.path.join('SongStorage')
+video_folder = os.path.join('app', 'VideoStorage')
+video_folder_extended = os.path.join('VideoStorage')
 print(upload_folder)
 ## Puts the file onto the database
 @main.route('/submit_form', methods=['POST'])
@@ -18,11 +20,15 @@ def submit_form():
     artist = data.get('artist')
     name = data.get('name')
     
-    downloaded_files, song_names = YoutubeAudioDownload(amount, artist, name)  
-    for file_path, song_name in zip(downloaded_files, song_names):
-        upload_file_to_db(file_path, song_name)  
-
-    return jsonify({'downloaded_files': downloaded_files, 'song_names': song_names})
+    
+    audio_files, song_names, video_files = YoutubeAudioDownload(amount, artist, name)  
+    
+    for file_path, song_name, video_path in zip(audio_files, song_names, video_files):
+        upload_file_to_db(file_path, song_name, video_path)  
+        print(f"audio_files: {audio_files}")
+        print(f"song_names: {song_names}")
+        print(f"video_files: {video_files}")
+    return jsonify({'downloaded_files': audio_files, 'song_names': song_names, 'videos': video_files})
 
 ## Youtube download script
 def YoutubeAudioDownload(amount, artist, name):
@@ -30,33 +36,51 @@ def YoutubeAudioDownload(amount, artist, name):
     response = ChatTest.talk_to_bot(user_input)
     titles = ChatTest.extract_titles(response)
     
-    downloaded_files = []
+    audio_files = []
     song_names = []
+    video_files =[]
+    
+    print("audio", audio_files)
+    print("video", video_files)
     for song in titles:
-        ydl_opts = {
+        audio_opts = {
             'format': 'bestaudio/best',
             'outtmpl': os.path.join(upload_folder, f"{secure_filename(song)}.mp4"),
             'quiet': True,
         }
+        
+        video_opts = {
+            'format': 'bestvideo',
+            'outtmpl': os.path.join(video_folder, f"{secure_filename(song)}_video.mp4"),
+            'quiet': True,
+        }
 
         try:
-            with yt_dlp.YoutubeDL(ydl_opts) as ydl:
+            with yt_dlp.YoutubeDL(audio_opts) as ydl:
                 info = ydl.extract_info(f"ytsearch:{song}", download=True)
-                downloaded_file = ydl.prepare_filename(info)
-                downloaded_files.append(downloaded_file)
+                audio_file = ydl.prepare_filename(info)
+                audio_files.append(audio_file)
                 song_names.append(song)
-                print(f"Downloaded: {downloaded_file}")
+                print(f"Downloaded: {audio_file}")
+        
+            with yt_dlp.YoutubeDL(video_opts) as ydl:
+                info = ydl.extract_info(f"ytsearch:{song}", download=True)
+                video_file = ydl.prepare_filename(info)
+                video_files.append(video_file)
+                song_names.append(song)
+                print(f"Downloaded: {video_file}")
                 
         except Exception as e:
             print(f"Failed to download {song}: {e}")
             continue
     
-    return downloaded_files, song_names
+    return audio_files, song_names, video_files
 
 ##Helper method to put file onto database
-def upload_file_to_db(file_path, song_name):
+def upload_file_to_db(file_path, song_name, video_path):
     file_name = os.path.basename(file_path)
-    song = SongBook(song_name=song_name, file_name=file_name, file_path=file_path)
+    video_name = os.path.basename(video_path)
+    song = SongBook(song_name=song_name, file_name=file_name, file_path=file_path, video_path = video_path, video_name = video_name)
     db.session.add(song)
     db.session.commit()
 
@@ -64,23 +88,23 @@ def upload_file_to_db(file_path, song_name):
 @main.route('/song_request', methods=['GET'])
 def get_song_name():
     try:
-        songs = db.session.query(SongBook.file_path, SongBook.song_name, SongBook.file_name).all()
+        songs = db.session.query(SongBook.file_path, SongBook.song_name, SongBook.file_name, SongBook.video_path, SongBook.video_name).all()
         song_list = []
         for song in songs:
             song_data = {
             'song_name': song.song_name,
             'file_path': song.file_path,
-            'file_name': song.file_name
+            'file_name': song.file_name,
+            'video_path': song.video_path,
+            'video_name': song.video_name,
              }
             song_list.append(song_data)
         return jsonify(song_list), 200
     except Exception as e:
         return jsonify({'error': str(e)}), 500
 
-
-
 ##Plays the audio from the file
-@main.route('/<path:filename>', methods=['GET'])
+@main.route('/audio/<path:filename>', methods=['GET'])
 def get_audio(filename):
    # Join the upload folder with the filename to get the full file path
     file_path = os.path.join(upload_folder, filename)
@@ -91,11 +115,33 @@ def get_audio(filename):
         return send_file(file_path_send_file, as_attachment=False)
     else:
         # If the file does not exist, return a 404 error
-        print("File does not exist!")
+        print("audio does not exist!")
+        return jsonify({'error': 'File not found'}), 404
+    
+@main.route('/video/<path:videoname>', methods = ['GET'])
+def get_video(videoname):
+    video_path = os.path.join(video_folder, videoname)
+    video_path_send_file = os.path.join(video_folder_extended, videoname)
+    print(video_path)
+    print(video_folder_extended)
+    
+    if os.path.isfile(video_path):
+        print(video_path)
+        print(video_folder_extended)
+        print("this video exists")
+        return send_file(video_path_send_file, as_attachment=False)
+    else:
+        # If the file does not exist, return a 404 error
+        print("Video does not exist!")
         return jsonify({'error': 'File not found'}), 404
     
 @main.route('/delete_songs', methods=['POST'])
-def delete_songs(filename):
+def delete_songs():
+    data = request.get_json()
+    filename = data.get('file_name')
+    if not filename:
+        return jsonify({'error': 'Filename is required'}), 400
+
     song_to_delete = db.session.query(SongBook).filter(SongBook.file_name == filename).first()
     try:
         if song_to_delete:

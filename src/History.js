@@ -8,6 +8,10 @@ function History({
   setSongPlaying,
   songTitle,
   setSongTitle,
+  setCurrentVideo,
+  currentVideo,
+  setVideoPlaying,
+  videoPlaying,
 }) {
   return (
     <div class="h-full">
@@ -18,6 +22,10 @@ function History({
         setCurrentSong={setCurrentSong}
         setSongPlaying={setSongPlaying}
         setSongTitle={setSongTitle}
+        videoPlaying={videoPlaying}
+        currentVideo={currentVideo}
+        setCurrentVideo={setCurrentVideo}
+        setVideoPlaying={setVideoPlaying}
       />
     </div>
   );

@@ -3,6 +3,7 @@ import { Container, div } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
 import PlayButton from "../PlayButton";
 import "./SongList.css";
+import VideoPlayer from "./VideoPlayer";
 
 function SongList({
   currentSong,
@@ -11,6 +12,10 @@ function SongList({
   setSongPlaying,
   songTitle,
   setSongTitle,
+  setCurrentVideo,
+  currentVideo,
+  setVideoPlaying,
+  videoPlaying,
 }) {
   const [audioList, setAudioList] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -54,28 +59,48 @@ function SongList({
 
   function switchSongs(item) {
     if (currentSong === null && songPlaying === null) {
-      setCurrentSong(`/${item.file_name}`);
+      setCurrentSong(`/audio/${item.file_name}`);
       setSongPlaying(null);
       setSongTitle(item.song_name);
+      setCurrentVideo(`/video/${item.video_name}`);
+      setVideoPlaying(null);
     } else if (currentSong !== null && songPlaying === null) {
       setCurrentSong(null);
-      setSongPlaying(`/${item.file_name}`);
+      setSongPlaying(`/audio/${item.file_name}`);
       setSongTitle(item.song_name);
+      setCurrentVideo(null);
+      setVideoPlaying(`/video/${item.video_name}`);
     } else if (currentSong === null && songPlaying !== null) {
-      setCurrentSong(`/${item.file_name}`);
+      setCurrentSong(`/audio/${item.file_name}`);
       setSongPlaying(null);
       setSongTitle(item.song_name);
+      setCurrentVideo(`/video/${item.video_name}`);
+      setVideoPlaying(null);
     } else {
       console.log("bad things");
     }
   }
+
+  // function switchVideos(item) {
+  //   if (currentSong === null && songPlaying === null) {
+  //     setCurrentVideo(`/${item.video_name}`);
+  //     setVideoPlaying(null);
+  //   } else if (currentSong !== null && songPlaying === null) {
+  //     setCurrentVideo(null);
+  //     setVideoPlaying(`/${item.video_name}`);
+  //   } else if (currentSong === null && songPlaying !== null) {
+  //     setCurrentVideo(`/${item.video_name}`);
+  //     setVideoPlaying(null);
+  //   }
+  // }
 
   const handleClick = (item, index) => {
     setActiveIndex(index);
     switchSongs(item);
   };
 
-  const handleDelete = async (e) => {
+  const handleDelete = async (e, item) => {
+    e.stopPropagation();
     e.preventDefault();
 
     try {
@@ -84,6 +109,7 @@ function SongList({
         headers: {
           "content-type": "application/json",
         },
+        body: JSON.stringify({ filename: item.file_name }),
       });
 
       if (!response.ok) {
@@ -99,29 +125,34 @@ function SongList({
 
   return (
     <div class="h-full overflow-auto scrollbar-hide text-center">
-      <h1 className="text-white mt-2">Song List</h1>
+      <h1 className="text-blue-400 mt-2 text-shadow-glowing">Song List</h1>
       <button
         onClick={fetchAudioList}
         variant="danger"
-        className="shadow-md shadow-red-500/20 text-red-500 rounded-md border-2 border-red-500 p-2 mt-4 mb-2 hover:bg-white transition-colors duration-300"
+        className="shadow-md shadow-blue-400/70 text-blue-400 rounded-md border-2 border-blue-400 p-2 mt-4 mb-2 hover:bg-white/10 transition-colors duration-300"
       >
         Reset Songs
       </button>
       <div>
         <div>
-          <ul className="text-white text-center">
+          <ul className="text-blue-400 text-center text-shadow">
             {audioList.map((item, index) => (
               <li
                 key={index}
                 onClick={() => handleClick(item, index)}
                 style={{ cursor: "pointer" }}
                 class={`flex flex-row justify-between rounded-lg w-full p-4 song-item ${
-                  activeIndex === index ? "bg-black" : "hover:bg-black"
+                  activeIndex === index
+                    ? "bg-transparent border-blue-400 border-y-2 shadow-custom-shadow"
+                    : "hover:bg-white/10"
                 }`}
               >
                 {item.song_name}
                 <div>
-                  <button onClick={handleDelete} className="border-black">
+                  <button
+                    onClick={(e) => handleDelete(e, item)}
+                    className="border-black"
+                  >
                     X
                   </button>
                 </div>
