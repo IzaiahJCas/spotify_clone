@@ -12,6 +12,11 @@
     flex-grow: 1;
 }
 
+.gap{
+    gap:20px
+    
+}
+
 .text-color{
     color: white;
 }
@@ -52,6 +57,7 @@
 
    overflow: hidden;
    border-radius: 25px;
+   padding-left: 10px;
   }
   
   .volume-bar::-webkit-slider-runnable-track {
@@ -109,7 +115,7 @@
      background-color: black;
      cursor: pointer;
      border-radius: 50%; /* Round thumb */
-     box-shadow: -807px 0 0 800px #2477ca;
+     box-shadow: -1007px 0 0 1000px #2477ca;
    }
    
  
