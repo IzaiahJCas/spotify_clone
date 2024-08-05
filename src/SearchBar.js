@@ -41,7 +41,7 @@ function SearchBar({ songTitle }) {
         <Row className="center-items">
           <Col className="mt-3">
             <input
-              className="form-control custom-input"
+              className="enabled:focus:shadow-md shadow-blue-400/70 form-control custom-input bg-transparent shadow-md shadow-blue-400/70"
               id="song-amount"
               type="text"
               value={amount}
@@ -51,7 +51,7 @@ function SearchBar({ songTitle }) {
           </Col>
           <Col className="mt-3">
             <input
-              className="form-control custom-input"
+              className="form-control custom-input bg-transparent shadow-md shadow-blue-400/70 enabled:focus:shadow-md shadow-blue-400/70"
               id="song-artist"
               value={artist}
               placeholder="Song Artist: "
@@ -61,7 +61,7 @@ function SearchBar({ songTitle }) {
           </Col>
           <Col className="mt-3">
             <input
-              className="form-control custom-input"
+              className="form-control custom-input bg-transparent shadow-md shadow-blue-400/70 enabled:focus:shadow-md shadow-blue-400/70 "
               id="song-name"
               value={name}
               placeholder="Song Name: "
@@ -72,14 +72,14 @@ function SearchBar({ songTitle }) {
           <Col>
             <button
               type="submit"
-              className="text-red-500 rounded-md border-2 border-red-500 p-2 mt-3.5 mb-2 hover:bg-white transition-colors duration-300"
+              className="shadow-md shadow-blue-400/70 text-blue-400 rounded-md border-2 border-blue-400 p-2 mt-3.5 mb-2 hover:bg-white/10 transition-colors duration-300"
             >
               Search
             </button>
           </Col>
         </Row>
       </form>
-      <Row className="text-white text-2xl custom-text">
+      <Row className="text-blue-400 text-2xl custom-text text-shadow-glowing">
         <h1>Song Playing: {songTitle}</h1>
       </Row>
     </Container>

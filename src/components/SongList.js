@@ -99,24 +99,26 @@ function SongList({
 
   return (
     <div class="h-full overflow-auto scrollbar-hide text-center">
-      <h1 className="text-white mt-2">Song List</h1>
+      <h1 className="text-blue-400 mt-2 text-shadow-glowing">Song List</h1>
       <button
         onClick={fetchAudioList}
         variant="danger"
-        className="shadow-md shadow-red-500/20 text-red-500 rounded-md border-2 border-red-500 p-2 mt-4 mb-2 hover:bg-white transition-colors duration-300"
+        className="shadow-md shadow-blue-400/70 text-blue-400 rounded-md border-2 border-blue-400 p-2 mt-4 mb-2 hover:bg-white/10 transition-colors duration-300"
       >
         Reset Songs
       </button>
       <div>
         <div>
-          <ul className="text-white text-center">
+          <ul className="text-blue-400 text-center text-shadow">
             {audioList.map((item, index) => (
               <li
                 key={index}
                 onClick={() => handleClick(item, index)}
                 style={{ cursor: "pointer" }}
                 class={`flex flex-row justify-between rounded-lg w-full p-4 song-item ${
-                  activeIndex === index ? "bg-black" : "hover:bg-black"
+                  activeIndex === index
+                    ? "bg-transparent border-blue-400 border-y-2 shadow-custom-shadow"
+                    : "hover:bg-white/10"
                 }`}
               >
                 {item.song_name}

@@ -42,3 +42,11 @@
 .custom-scrollbar::-webkit-scrollbar-thumb:hover {
   background: #555; /* Color of the scrollbar handle on hover */
 }
+
+.text-shadow-glowing{
+  text-shadow: 1px 1px 2px rgb(255, 255, 255), 0 0 1em rgb(160, 160, 235), 0 0 0.2em rgb(139, 139, 238);
+}
+
+.text-shadow{
+  text-shadow: 1px 1px 2px rgb(0, 0, 0);
+}
