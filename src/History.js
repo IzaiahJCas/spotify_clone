@@ -10,7 +10,7 @@ function History({
   setSongTitle,
 }) {
   return (
-    <Container style={{ display: "flex", flexDirection: "column", flex: "1" }}>
+    <div class="h-full">
       <SongList
         currentSong={currentSong}
         songPlaying={songPlaying}
@@ -19,7 +19,7 @@ function History({
         setSongPlaying={setSongPlaying}
         setSongTitle={setSongTitle}
       />
-    </Container>
+    </div>
   );
 }
 

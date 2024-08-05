@@ -1,6 +1,7 @@
 import { Col, Container, Row } from "react-bootstrap";
 import { useState } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
+import "./SearchBar.css";
 
 function SearchBar({ songTitle }) {
   const [amount, setAmount] = useState("");
@@ -37,11 +38,10 @@ function SearchBar({ songTitle }) {
   return (
     <Container>
       <form onSubmit={handleSubmit}>
-        <Row>
-          <Col>
-            <label htmlFor="song-amount">Amount of songs:</label>
+        <Row className="center-items">
+          <Col className="mt-3">
             <input
-              className="form-control"
+              className="form-control custom-input"
               id="song-amount"
               type="text"
               value={amount}
@@ -49,10 +49,9 @@ function SearchBar({ songTitle }) {
               onChange={(e) => setAmount(e.target.value)}
             />
           </Col>
-          <Col>
-            <label htmlFor="song-artist">Song Artist:</label>
+          <Col className="mt-3">
             <input
-              className="form-control"
+              className="form-control custom-input"
               id="song-artist"
               value={artist}
               placeholder="Song Artist: "
@@ -60,10 +59,9 @@ function SearchBar({ songTitle }) {
               onChange={(e) => setArtist(e.target.value)}
             />
           </Col>
-          <Col>
-            <label htmlFor="song-name">Song Name:</label>
+          <Col className="mt-3">
             <input
-              className="form-control"
+              className="form-control custom-input"
               id="song-name"
               value={name}
               placeholder="Song Name: "
@@ -72,11 +70,16 @@ function SearchBar({ songTitle }) {
             />
           </Col>
           <Col>
-            <button type="submit">Search</button>
+            <button
+              type="submit"
+              className="text-red-500 rounded-md border-2 border-red-500 p-2 mt-3.5 mb-2 hover:bg-white transition-colors duration-300"
+            >
+              Search
+            </button>
           </Col>
         </Row>
       </form>
-      <Row>
+      <Row className="text-white text-2xl custom-text">
         <h1>Song Playing: {songTitle}</h1>
       </Row>
     </Container>

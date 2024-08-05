@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
-import { Container, Row, Col } from "react-bootstrap";
+import { Container, div } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
 import PlayButton from "../PlayButton";
 import "./SongList.css";
@@ -15,8 +15,7 @@ function SongList({
   const [audioList, setAudioList] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
-  const [isPlaying, setIsPlaying] = useState(false);
-  const audioRef = useRef(null);
+  const [activeIndex, setActiveIndex] = useState(null);
 
   async function fetchAudioList() {
     setLoading(true);
@@ -51,7 +50,6 @@ function SongList({
 
   useEffect(() => {
     fetchAudioList();
-    resetAudioList();
   }, []);
 
   function switchSongs(item) {
@@ -71,6 +69,11 @@ function SongList({
       console.log("bad things");
     }
   }
+
+  const handleClick = (item, index) => {
+    setActiveIndex(index);
+    switchSongs(item);
+  };
 
   const handleDelete = async (e) => {
     e.preventDefault();
@@ -95,32 +98,39 @@ function SongList({
   };
 
   return (
-    <Container>
-      <h1>Song List</h1>
-      <button onClick={fetchAudioList} variant="danger">
+    <div class="h-full overflow-auto scrollbar-hide text-center">
+      <h1 className="text-white mt-2">Song List</h1>
+      <button
+        onClick={fetchAudioList}
+        variant="danger"
+        className="shadow-md shadow-red-500/20 text-red-500 rounded-md border-2 border-red-500 p-2 mt-4 mb-2 hover:bg-white transition-colors duration-300"
+      >
         Reset Songs
       </button>
-      {loading && <p>Loading...</p>}
-      {error && <p>Error: {error}</p>}
-      <Row>
-        <Col className="d-flex flex-column">
-          <ul>
+      <div>
+        <div>
+          <ul className="text-white text-center">
             {audioList.map((item, index) => (
               <li
                 key={index}
-                onClick={() => switchSongs(item)}
+                onClick={() => handleClick(item, index)}
                 style={{ cursor: "pointer" }}
+                class={`flex flex-row justify-between rounded-lg w-full p-4 song-item ${
+                  activeIndex === index ? "bg-black" : "hover:bg-black"
+                }`}
               >
                 {item.song_name}
                 <div>
-                  <button onClick={handleDelete}> delete </button>
+                  <button onClick={handleDelete} className="border-black">
+                    X
+                  </button>
                 </div>
               </li>
             ))}
           </ul>
-        </Col>
-      </Row>
-    </Container>
+        </div>
+      </div>
+    </div>
   );
 }
 

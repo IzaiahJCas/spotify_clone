@@ -46,7 +46,7 @@ function PlayButton({
   return (
     <div className="container">
       <div className="row background-color">
-        <div className="col d-flex justify-content-end align-items-center">
+        <div className="col d-flex justify-content-end">
           <button onClick={playAndPause} className="play-button">
             <IoPlayCircle />
           </button>
@@ -59,8 +59,8 @@ function PlayButton({
             </div>
           )}
         </div>
-        <div className="col d-flex justify-content-end align-items-center gap">
-          <RxSpeakerLoud style={{ color: "white" }} />
+        <div className="col d-flex justify-content-end align-items-center gap volume-component">
+          <RxSpeakerLoud />
           <input
             type="range"
             max={1}
@@ -72,7 +72,7 @@ function PlayButton({
           />
         </div>
         <div className="row">
-          <div className="col-auto text-color">
+          <div className="col-auto text-white">
             <p>{formatTime(currentTime)}</p>
           </div>
           <div className="col">
@@ -85,7 +85,7 @@ function PlayButton({
               className="song-bar"
             />
           </div>
-          <div className="col-auto text-color">
+          <div className="col-auto text-white">
             <p>{formatTime(songDuration)}</p>
           </div>
         </div>
