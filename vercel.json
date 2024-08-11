@@ -1,3 +1,38 @@
 {
-  "rewrites": [{ "source": "/(.*)", "destination": "/api/index" }]
+  "rewrites": [{ "source": "/(.*)", "destination": "/api/index" }],
+
+  "version": 2,
+  "builds": [
+    {
+      "src": "api/**/*.py",
+      "use": "@vercel/python"
+    }
+  ],
+  "routes": [
+    {
+      "src": "/submit_form",
+      "methods": ["POST"],
+      "dest": "/api/submit_form.py"
+    },
+    {
+      "src": "/song_request",
+      "methods": ["GET"],
+      "dest": "/api/song_request.py"
+    },
+    {
+      "src": "/audio/(.*)",
+      "methods": ["GET"],
+      "dest": "/api/audio.py"
+    },
+    {
+      "src": "/video/(.*)",
+      "methods": ["GET"],
+      "dest": "/api/video.py"
+    },
+    {
+      "src": "/delete_songs",
+      "methods": ["POST"],
+      "dest": "/api/delete_songs.py"
+    }
+  ]
 }
