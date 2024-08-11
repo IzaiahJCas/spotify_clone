@@ -138,7 +138,7 @@ def get_video(videoname):
 @main.route('/delete_songs', methods=['POST'])
 def delete_songs():
     data = request.get_json()
-    filename = data.get('file_name')
+    filename = data.get('filename')
     if not filename:
         return jsonify({'error': 'Filename is required'}), 400
 

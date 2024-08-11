@@ -14,6 +14,7 @@ function App() {
   const [isPlaying, setIsPlaying] = useState(false);
   const [songTitle, setSongTitle] = useState(null);
   const [volume, setVolume] = useState(0);
+  const [refresh, setRefresh] = useState(false);
   const audioRef = useRef(null);
   const videoRef = useRef(null);
 
@@ -60,9 +61,11 @@ function App() {
             setSongTitle={setSongTitle}
             setCurrentVideo={setCurrentVideo}
             setVideoPlaying={setVideoPlaying}
+            setRefresh={setRefresh}
+            refresh={refresh}
           />
         </div>
-        <div class="border-2 border-blue-800/10 bg-white/10 backdrop-blur-xl col-span-3 row-span-7 rounded-lg shadow-custom-shadow h-51 mt-4 mb-4 mr-4">
+        <div class="border-2 border-blue-800/10 bg-white/10 backdrop-blur-xl col-span-3 row-span-7 rounded-lg shadow-custom-shadow h-51 mt-4 mb-4 mr-4 overflow-auto scrollbar-hide">
           <SearchBar
             songTitle={songTitle}
             videoPlaying={videoPlaying}
@@ -70,6 +73,8 @@ function App() {
             setCurrentVideo={setCurrentVideo}
             setVideoPlaying={setVideoPlaying}
             videoRef={videoRef}
+            setRefresh={setRefresh}
+            refresh={refresh}
           />
         </div>
         {/*bottom row*/}

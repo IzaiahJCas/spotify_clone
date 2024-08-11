@@ -50,3 +50,13 @@
 .text-shadow{
   text-shadow: 1px 1px 2px rgb(0, 0, 0);
 }
+
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+
+/* For IE, Edge and Firefox */
+.scrollbar-hide {
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
+}

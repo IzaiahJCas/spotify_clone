@@ -16,6 +16,8 @@ function SongList({
   currentVideo,
   setVideoPlaying,
   videoPlaying,
+  refresh,
+  setRefresh,
 }) {
   const [audioList, setAudioList] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -38,24 +40,12 @@ function SongList({
     }
   }
 
-  async function resetAudioList() {
-    try {
-      const response = await fetch("/song_request");
-      if (!response.ok) {
-        throw new Error("Network response was not ok");
-      }
-      if (!response.ok) {
-        throw new Error("Network response was not ok");
-      }
-      await fetchAudioList();
-    } catch (error) {
-      console.error("There was a problem with the fetch operation:", error);
-    }
-  }
-
   useEffect(() => {
-    fetchAudioList();
-  }, []);
+    if (refresh) {
+      fetchAudioList();
+      setRefresh(false);
+    }
+  }, [refresh]);
 
   function switchSongs(item) {
     if (currentSong === null && songPlaying === null) {
@@ -116,7 +106,7 @@ function SongList({
         throw new Error("Network response was not ok");
       }
       const result = await response.json();
-
+      setRefresh(true);
       console.log(result);
     } catch (error) {
       console.error("There was a problem with the fetch operation:", error);

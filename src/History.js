@@ -12,6 +12,8 @@ function History({
   currentVideo,
   setVideoPlaying,
   videoPlaying,
+  refresh,
+  setRefresh,
 }) {
   return (
     <div class="h-full">
@@ -26,6 +28,8 @@ function History({
         currentVideo={currentVideo}
         setCurrentVideo={setCurrentVideo}
         setVideoPlaying={setVideoPlaying}
+        setRefresh={setRefresh}
+        refresh={refresh}
       />
     </div>
   );

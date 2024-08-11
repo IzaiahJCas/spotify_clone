@@ -11,6 +11,8 @@ function SearchBar({
   setVideoPlaying,
   videoPlaying,
   videoRef,
+  refresh,
+  setRefresh,
 }) {
   const [amount, setAmount] = useState("");
   const [artist, setArtist] = useState("");
@@ -36,7 +38,7 @@ function SearchBar({
         throw new Error("Network response was not ok");
       }
       const result = await response.json();
-
+      setRefresh(true);
       console.log(result);
     } catch (error) {
       console.error("There was a problem with the fetch operation:", error);
