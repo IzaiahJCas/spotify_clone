@@ -6,10 +6,10 @@
       "use": "@vercel/python"
     },
     {
-      "src": "React/package.json",
+      "src": "spotify_clone/React/package.json",
       "use": "@vercel/static-build",
       "config": {
-        "distDir": "React/build"
+        "distDir": "build"
       }
     }
   ],
