@@ -4,13 +4,6 @@
     {
       "src": "app/**/*.py",
       "use": "@vercel/python"
-    },
-    {
-      "src": "spotify_clone/React/package.json",
-      "use": "@vercel/static-build",
-      "config": {
-        "distDir": "build"
-      }
     }
   ],
   "routes": [
