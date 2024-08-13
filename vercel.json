@@ -1,0 +1,40 @@
+{
+  "version": 2,
+  "builds": [
+    {
+      "src": "flask-server/**/*.py",
+      "use": "@vercel/python"
+    }
+  ],
+  "routes": [
+    {
+      "src": "/submit_form",
+      "methods": ["POST"],
+      "dest": "/flask-server/app/submit_form.py"
+    },
+    {
+      "src": "/song_request",
+      "methods": ["GET"],
+      "dest": "/flask-server/app/song_request.py"
+    },
+    {
+      "src": "/audio/(.*)",
+      "methods": ["GET"],
+      "dest": "/flask-server/app/audio.py"
+    },
+    {
+      "src": "/video/(.*)",
+      "methods": ["GET"],
+      "dest": "/flask-server/app/video.py"
+    },
+    {
+      "src": "/delete_songs",
+      "methods": ["POST"],
+      "dest": "/flask-server/app/delete_songs.py"
+    },
+    {
+      "src": "/(.*)",
+      "dest": "/react-frontend/build/$1"
+    }
+  ]
+}
