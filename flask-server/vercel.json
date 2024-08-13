@@ -10,27 +10,27 @@
     {
       "src": "/submit_form",
       "methods": ["POST"],
-      "dest": "/app/submit_form.py"
+      "dest": "/app/routes.py"
     },
     {
       "src": "/song_request",
       "methods": ["GET"],
-      "dest": "/app/song_request.py"
+      "dest": "/app/routes.py"
     },
     {
       "src": "/audio/(.*)",
       "methods": ["GET"],
-      "dest": "/app/audio.py"
+      "dest": "/app/routes.py"
     },
     {
       "src": "/video/(.*)",
       "methods": ["GET"],
-      "dest": "/app/video.py"
+      "dest": "/app/routes.py"
     },
     {
       "src": "/delete_songs",
       "methods": ["POST"],
-      "dest": "/app/delete_songs.py"
+      "dest": "/app/routes.py"
     }
   ]
 }
