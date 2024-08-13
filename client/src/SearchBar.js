@@ -26,7 +26,7 @@ function SearchBar({
     e.preventDefault();
 
     try {
-      const response = await fetch("/submit_form", {
+      const response = await fetch("/api/submit_form", {
         method: "POST",
         headers: {
           "content-type": "application/json",

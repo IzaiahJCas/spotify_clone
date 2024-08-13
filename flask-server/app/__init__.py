@@ -10,7 +10,7 @@ db = SQLAlchemy()
 migrate = Migrate()
 
 def create_app(config_name='default'):
-    app = Flask(__name__)
+    app = Flask(__name__, static_folder="../build", static_url_path="/")
     CORS(app)
 
     # Load environment variables
@@ -33,3 +33,5 @@ def create_app(config_name='default'):
     app.register_blueprint(main_blueprint)
 
     return app
+
+app = create_app()

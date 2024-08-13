@@ -6,14 +6,19 @@ from . import ChatTest
 from . import db
 from .models import SongBook
 
-main = Blueprint('main', __name__)
+main = Blueprint('main', __name__, static_folder="../build", static_url_path="/")
 upload_folder = os.path.join('app', 'SongStorage')
 upload_folder_extended = os.path.join('SongStorage')
 video_folder = os.path.join('app', 'VideoStorage')
 video_folder_extended = os.path.join('VideoStorage')
 print(upload_folder)
+
+@main.route('/')
+def index():
+    return send_from_directory(main.static_folder, 'index.html')
+
 ## Puts the file onto the database
-@main.route('/submit_form', methods=['POST'])
+@main.route('/api/submit_form', methods=['POST'])
 def submit_form():
     data = request.get_json()
     amount = data.get('amount')
@@ -85,7 +90,7 @@ def upload_file_to_db(file_path, song_name, video_path):
     db.session.commit()
 
 ##Requests the song name and filepath from the database
-@main.route('/song_request', methods=['GET'])
+@main.route('/api/song_request', methods=['GET'])
 def get_song_name():
     try:
         songs = db.session.query(SongBook.file_path, SongBook.song_name, SongBook.file_name, SongBook.video_path, SongBook.video_name).all()
@@ -104,7 +109,7 @@ def get_song_name():
         return jsonify({'error': str(e)}), 500
 
 ##Plays the audio from the file
-@main.route('/audio/<path:filename>', methods=['GET'])
+@main.route('/api/audio/<path:filename>', methods=['GET'])
 def get_audio(filename):
    # Join the upload folder with the filename to get the full file path
     file_path = os.path.join(upload_folder, filename)
@@ -118,7 +123,7 @@ def get_audio(filename):
         print("audio does not exist!")
         return jsonify({'error': 'File not found'}), 404
     
-@main.route('/video/<path:videoname>', methods = ['GET'])
+@main.route('/api/video/<path:videoname>', methods = ['GET'])
 def get_video(videoname):
     video_path = os.path.join(video_folder, videoname)
     video_path_send_file = os.path.join(video_folder_extended, videoname)
@@ -135,7 +140,7 @@ def get_video(videoname):
         print("Video does not exist!")
         return jsonify({'error': 'File not found'}), 404
     
-@main.route('/delete_songs', methods=['POST'])
+@main.route('/api/delete_songs', methods=['POST'])
 def delete_songs():
     data = request.get_json()
     filename = data.get('filename')

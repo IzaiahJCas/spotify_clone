@@ -27,7 +27,7 @@ function SongList({
   async function fetchAudioList() {
     setLoading(true);
     try {
-      const response = await fetch("/song_request");
+      const response = await fetch("/api/song_request");
       if (!response.ok) {
         throw new Error("Network response was not ok");
       }
@@ -49,22 +49,22 @@ function SongList({
 
   function switchSongs(item) {
     if (currentSong === null && songPlaying === null) {
-      setCurrentSong(`/audio/${item.file_name}`);
+      setCurrentSong(`/api/audio/${item.file_name}`);
       setSongPlaying(null);
       setSongTitle(item.song_name);
-      setCurrentVideo(`/video/${item.video_name}`);
+      setCurrentVideo(`/api/video/${item.video_name}`);
       setVideoPlaying(null);
     } else if (currentSong !== null && songPlaying === null) {
       setCurrentSong(null);
-      setSongPlaying(`/audio/${item.file_name}`);
+      setSongPlaying(`/api/audio/${item.file_name}`);
       setSongTitle(item.song_name);
       setCurrentVideo(null);
-      setVideoPlaying(`/video/${item.video_name}`);
+      setVideoPlaying(`/api/video/${item.video_name}`);
     } else if (currentSong === null && songPlaying !== null) {
-      setCurrentSong(`/audio/${item.file_name}`);
+      setCurrentSong(`/api/audio/${item.file_name}`);
       setSongPlaying(null);
       setSongTitle(item.song_name);
-      setCurrentVideo(`/video/${item.video_name}`);
+      setCurrentVideo(`/api/video/${item.video_name}`);
       setVideoPlaying(null);
     } else {
       console.log("bad things");
@@ -81,7 +81,7 @@ function SongList({
     e.preventDefault();
 
     try {
-      const response = await fetch("/delete_songs", {
+      const response = await fetch("/api/delete_songs", {
         method: "POST",
         headers: {
           "content-type": "application/json",
