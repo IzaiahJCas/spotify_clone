@@ -1,12 +1,12 @@
 {
   "version": 2,
-  "buildCommand": [
+  "builds": [
     {
       "src": "app/**/*.py",
       "use": "@vercel/python"
     },
     {
-      "src": "path/to/your/react-app/package.json",
+      "src": "spotify-clone/React/package.json",
       "use": "@vercel/static-build",
       "config": {
         "distDir": "build"
