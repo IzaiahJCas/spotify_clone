@@ -2,11 +2,11 @@
   "version": 2,
   "builds": [
     {
-      "src": "flask-server/**/*.py",
+      "src": "app/**/*.py",
       "use": "@vercel/python"
     },
     {
-      "src": "React/package.json",
+      "src": "spotify-clone/React/package.json",
       "use": "@vercel/static-build",
       "config": {
         "distDir": "build"
@@ -17,31 +17,27 @@
     {
       "src": "/submit_form",
       "methods": ["POST"],
-      "dest": "/flask-server/app/submit_form.py"
+      "dest": "/app/submit_form.py"
     },
     {
       "src": "/song_request",
       "methods": ["GET"],
-      "dest": "/flask-server/app/song_request.py"
+      "dest": "/app/song_request.py"
     },
     {
       "src": "/audio/(.*)",
       "methods": ["GET"],
-      "dest": "/flask-server/app/audio.py"
+      "dest": "/app/audio.py"
     },
     {
       "src": "/video/(.*)",
       "methods": ["GET"],
-      "dest": "/flask-server/app/video.py"
+      "dest": "/app/video.py"
     },
     {
       "src": "/delete_songs",
       "methods": ["POST"],
-      "dest": "/flask-server/app/delete_songs.py"
-    },
-    {
-      "src": "/(.*)",
-      "dest": "/React/build/$1"
+      "dest": "/app/delete_songs.py"
     }
   ]
 }
