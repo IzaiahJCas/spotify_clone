@@ -68,12 +68,14 @@ def YoutubeAudioDownload(amount, artist, name):
                 'format': 'bestaudio/best',
                 'outtmpl': os.path.join(temp_audio_dir, f"{secure_filename(song)}.mp4"),
                 'quiet': True,
+                'cookiefile': 'cookies.txt',
             }
             
             video_opts = {
                 'format': 'bestvideo',
                 'outtmpl': os.path.join(temp_video_dir, f"{secure_filename(song)}_video.mp4"),
                 'quiet': True,
+                'cookiefile': 'cookies.txt',
             }
 
             try:
