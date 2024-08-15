@@ -23,6 +23,8 @@ function SongList({
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [activeIndex, setActiveIndex] = useState(null);
+  const [audioUrl, setAudioUrl] = useState(null);
+  const [videoUrl, setVideoUrl] = useState(null);
 
   async function fetchAudioList() {
     setLoading(true);
@@ -47,27 +49,70 @@ function SongList({
     }
   }, [refresh]);
 
-  function switchSongs(item) {
-    if (currentSong === null && songPlaying === null) {
-      setCurrentSong(`/api/audio/${item.file_name}`);
-      setSongPlaying(null);
-      setSongTitle(item.song_name);
-      setCurrentVideo(`/api/video/${item.video_name}`);
-      setVideoPlaying(null);
-    } else if (currentSong !== null && songPlaying === null) {
-      setCurrentSong(null);
-      setSongPlaying(`/api/audio/${item.file_name}`);
-      setSongTitle(item.song_name);
-      setCurrentVideo(null);
-      setVideoPlaying(`/api/video/${item.video_name}`);
-    } else if (currentSong === null && songPlaying !== null) {
-      setCurrentSong(`/api/audio/${item.file_name}`);
-      setSongPlaying(null);
-      setSongTitle(item.song_name);
-      setCurrentVideo(`/api/video/${item.video_name}`);
-      setVideoPlaying(null);
-    } else {
-      console.log("bad things");
+  async function fetchFirebaseAudio(filename) {
+    setLoading(true); // Set loading to true at the start
+    try {
+      const response = await fetch(`/api/audio/${filename}`);
+      if (!response.ok) {
+        throw new Error("Network response was not ok");
+      }
+      const result = await response.json();
+      return result.audio_url; // Return the audio URL
+    } catch (error) {
+      setError(error.message);
+    } finally {
+      setLoading(false); // Set loading to false in the finally block
+    }
+  }
+
+  async function fetchFirebaseVideo(filename) {
+    setLoading(true); // Set loading to true at the start
+    try {
+      const response = await fetch(`/api/video/${filename}`);
+      if (!response.ok) {
+        throw new Error("Network response was not ok");
+      }
+      const result = await response.json();
+      return result.video_url; // Return the video URL
+    } catch (error) {
+      setError(error.message);
+    } finally {
+      setLoading(false); // Set loading to false in the finally block
+    }
+  }
+
+  async function switchSongs(item) {
+    setLoading(true); // Optionally show a loading state
+
+    try {
+      const audioUrl = await fetchFirebaseAudio(item.file_name);
+      const videoUrl = await fetchFirebaseVideo(item.video_name);
+
+      if (currentSong === null && songPlaying === null) {
+        setCurrentSong(audioUrl);
+        setSongPlaying(null);
+        setSongTitle(item.song_name);
+        setCurrentVideo(videoUrl);
+        setVideoPlaying(null);
+      } else if (currentSong !== null && songPlaying === null) {
+        setCurrentSong(null);
+        setSongPlaying(audioUrl);
+        setSongTitle(item.song_name);
+        setCurrentVideo(null);
+        setVideoPlaying(videoUrl);
+      } else if (currentSong === null && songPlaying !== null) {
+        setCurrentSong(audioUrl);
+        setSongPlaying(null);
+        setSongTitle(item.song_name);
+        setCurrentVideo(null);
+        setVideoPlaying(videoUrl);
+      } else {
+        console.log("bad things");
+      }
+    } catch (error) {
+      console.error("Error in switchSongs:", error.message);
+    } finally {
+      setLoading(false); // Hide loading state
     }
   }
 
