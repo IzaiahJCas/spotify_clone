@@ -17,6 +17,7 @@ upload_folder = os.path.join('app', 'SongStorage')
 upload_folder_extended = os.path.join('SongStorage')
 video_folder = os.path.join('app', 'VideoStorage')
 video_folder_extended = os.path.join('VideoStorage')
+cookies_file = os.path.join("flask-server", "app", "cookies.txt")
 print(upload_folder)
 
 ##Firebase storage
@@ -68,14 +69,14 @@ def YoutubeAudioDownload(amount, artist, name):
                 'format': 'bestaudio/best',
                 'outtmpl': os.path.join(temp_audio_dir, f"{secure_filename(song)}.mp4"),
                 'quiet': True,
-                'cookiefile': 'cookies.txt',
+                'cookiefile': cookies_file,
             }
             
             video_opts = {
                 'format': 'bestvideo',
                 'outtmpl': os.path.join(temp_video_dir, f"{secure_filename(song)}_video.mp4"),
                 'quiet': True,
-                'cookiefile': 'cookies.txt',
+                'cookiefile': cookies_file,
             }
 
             try:
