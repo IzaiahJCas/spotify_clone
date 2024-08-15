@@ -20,6 +20,7 @@ video_folder_extended = os.path.join('VideoStorage')
 cookies_file = os.path.join('app', 'cookies.txt')
 config_path = os.path.join('config', 'yt-dlp.conf')
 print(upload_folder)
+print(cookies_file)
 
 ##Firebase storage
 service_account_key_path = "./firebase.json"
@@ -66,13 +67,14 @@ def YoutubeAudioDownload(amount, artist, name):
     
     with tempfile.TemporaryDirectory() as temp_audio_dir, tempfile.TemporaryDirectory() as temp_video_dir:
         for song in titles:
+            if not os.path.exists(cookies_file):
+                raise FileNotFoundError(f"The cookies file does not exist at: {cookies_file}")
+            
             audio_opts = {
                 'format': 'bestaudio/best',
                 'outtmpl': os.path.join(temp_audio_dir, f"{secure_filename(song)}.mp4"),
                 'quiet': True,
                 'cookiefile': cookies_file,
-                'username': 'thesilenteggboi@gmail.com',
-                'password': 'skatefasteatass',
             }
             
             video_opts = {
@@ -80,9 +82,8 @@ def YoutubeAudioDownload(amount, artist, name):
                 'outtmpl': os.path.join(temp_video_dir, f"{secure_filename(song)}_video.mp4"),
                 'quiet': True,
                 'cookiefile': cookies_file,
-                'username': 'thesilenteggboi@gmail.com',
-                'password': 'skatefasteatass',
             }
+            
 
             try:
                 with yt_dlp.YoutubeDL(audio_opts) as ydl:
